@@ -75,9 +75,27 @@ export default function DashboardPage() {
 
   const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0)
 
-  const handleAddExpense = (newExpense: any) => {
-    setExpenses([...expenses, { ...newExpense, id: Date.now().toString() }])
-    setIsAddingExpense(false)
+  const handleAddExpense = async (newExpense: any) => {
+    try {
+      const response = await fetch('/api/expenses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newExpense),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to add expense')
+      }
+
+      const savedExpense = await response.json()
+      setExpenses([...expenses, savedExpense])
+      setIsAddingExpense(false)
+    } catch (error) {
+      console.error('Error adding expense:', error)
+      // Here you might want to show an error notification to the user
+    }
   }
 
   const handleEditExpense = (updatedExpense: any) => {
