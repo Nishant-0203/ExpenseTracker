@@ -275,7 +275,7 @@ export default function DashboardPage() {
                 <CardTitle>Expense Analytics</CardTitle>
                 <CardDescription>Visualize your spending patterns</CardDescription>
               </CardHeader>
-              <CardContent className="pl-2">
+              <CardContent className="pl-2"> 
                 <ExpenseSummary expenses={expenses} showAllCharts />
               </CardContent>
             </Card>
